@@ -1,6 +1,18 @@
-import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
+import type { AppProps } from "next/app";
+import dynamic from "next/dynamic";
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
-}
+import GlobalStyle from "@/styles/global-styles";
+const Providers = dynamic(() => import("@/components/Providers"), {
+  ssr: false,
+});
+
+const App = ({ Component, pageProps }: AppProps) => {
+  return (
+    <Providers>
+      <GlobalStyle />
+      <Component {...pageProps} />
+    </Providers>
+  );
+};
+
+export default App;
