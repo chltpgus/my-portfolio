@@ -1,53 +1,99 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+import { motion } from "framer-motion";
 
-import { maxWidth } from '@/styles/theme';
+import { maxWidth, deviceSize } from '@/styles/theme';
+import media from '@/styles/mediaQuery';
 import { notoSansKrBold } from '@/styles/fonts/notoSans';
 import { Link } from 'react-scroll';
-import ThemeChangeToggle from '@/components/atoms/ThemeChangeToggle';
+import useMaxSize from '@/hooks/useMaxSize';
+import useColorTheme from '@/hooks/useColorTheme';
 
+import ThemeChangeToggle from '@/components/atoms/ThemeChangeToggle';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const Nav = () => {
-    return <NavStyle.Nav>
-        <NavStyle.Container>
+    const [isMenu, setIsMenu] = useState<boolean>(false);
+    const isTablet = useMaxSize(deviceSize.tablet);
+    const colors = useColorTheme();
+
+    const animation = {
+        initial: {
+            opacity: 0,
+            x: 50,
+        },
+        animate: {
+            opacity: 1,
+            x: 0,
+        },
+        transition: { duration: 0.2, delay: 1 * 0.2 }
+    }
+
+    return <NavStyle.NavContainer>
+        <NavStyle.Nav>
             <NavStyle.LogoWrapper>
                 Hyeon
             </NavStyle.LogoWrapper>
             <NavStyle.LinkContainer>
-                <NavStyle.Link to="background">
-                    Background
-                </NavStyle.Link>
-                <NavStyle.Link to="skills">
-                    Skills
-                </NavStyle.Link>
-                <NavStyle.Link to="projects">
-                    Projects
-                </NavStyle.Link>
-                <NavStyle.Link to="projects">
-                    Career
-                </NavStyle.Link>
-                <ThemeChangeToggle />
+                {(isMenu || !isTablet) && (<>
+                    <NavStyle.LinkWrapper {...animation}>
+                        <NavStyle.Link to="background" spy={true} smooth={true}>
+                            Background
+                        </NavStyle.Link>
+                    </NavStyle.LinkWrapper>
+                    <NavStyle.LinkWrapper {...animation}>
+                        <NavStyle.Link to="skills" spy={true} smooth={true}>
+                            Skills
+                        </NavStyle.Link>
+                    </NavStyle.LinkWrapper>
+                    <NavStyle.LinkWrapper {...animation}>
+                        <NavStyle.Link to="projects" spy={true} smooth={true}>
+                            Projects
+                        </NavStyle.Link>
+                    </NavStyle.LinkWrapper>
+                    <NavStyle.LinkWrapper {...animation}>
+                        <NavStyle.Link to="projects" spy={true} smooth={true}>
+                            Career
+                        </NavStyle.Link>
+                    </NavStyle.LinkWrapper>
+                    <NavStyle.ToggleWrapper>
+                        <ThemeChangeToggle />
+                    </NavStyle.ToggleWrapper>
+                </>)}
+                {
+                    isTablet &&
+                    (<NavStyle.MenuWrapper onClick={() => setIsMenu((isMenu) => !isMenu)}>
+                        <MenuIcon sx={{ color: colors.textColor }} fontSize="large" />
+                    </NavStyle.MenuWrapper>)
+                }
             </NavStyle.LinkContainer>
-        </NavStyle.Container>
-    </NavStyle.Nav>
+        </NavStyle.Nav>
+    </NavStyle.NavContainer>
 };
 
 export default Nav;
 
 const NavStyle = {
-    Nav: styled.nav`
-        position: sticky;
+    NavContainer: styled.div`
         display: flex;
+        position: sticky;
+        top:0;
         width: 100%;
         justify-content: center;
+        background-color: ${props => props.theme.colors.backgroundColor};
         box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.12);
+        ${notoSansKrBold.style};
     `,
-    Container: styled.div`
+    Nav: styled.nav`
+        position: relative;
         display: flex;
         width: 100%;
         max-width: ${maxWidth}px;
         justify-content: space-between;
         padding : 16px;
-        ${notoSansKrBold.style};
+        ${media.tablet}{
+            flex-direction: column;
+        }
     `,
     LogoWrapper: styled.div`
         display: flex;
@@ -57,6 +103,11 @@ const NavStyle = {
     LinkContainer: styled.ul`
         display: flex;
         gap: 24px;
+        ${media.tablet}{
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
     `,
     Link: styled(Link)`
         height:100%;
@@ -66,5 +117,33 @@ const NavStyle = {
         :hover{
             opacity:0.7;
         }
-    `
+        ${media.tablet}{
+            padding: 12px;
+            border-radius: 8px;
+            justify-content: center;
+            width: 100%;
+            :hover{
+                opacity: 1;
+                background-color: ${props => props.theme.colors.primary};
+            }
+        }
+    `,
+    LinkWrapper: styled(motion.div)`
+        ${media.tablet}{
+            width: 100%;
+            :first-child{
+                margin-top: 16px;
+            }
+        }
+    `,
+    ToggleWrapper: styled.div``,
+    MenuWrapper: styled.button`
+        position: absolute;
+        padding: 16px 16px 0px 0px;
+        right: 0;
+        top: 0;
+        :hover{
+            opacity: 0.7;
+        }
+    `,
 }
