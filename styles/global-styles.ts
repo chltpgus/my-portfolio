@@ -20,8 +20,10 @@ const GlobalStyle = createGlobalStyle<ThemeProps<ThemeType>>`
 
   body {
     width: 100%;
-    height: 100vh;
+    height: 100%;
+    min-height: 100vh;
     overflow-x:hidden;
+    position: relative;
     background-color: ${(props) => props.theme.colors.backgroundColor};
     transition-property: background-color, color;
     transition-duration: 0.3s, 0.3s;
