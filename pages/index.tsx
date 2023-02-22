@@ -1,9 +1,12 @@
 import Head from "next/head";
 import styled from "styled-components";
-import { useColorTheme } from "store/useColorTheme";
+
+import { Section, Container, Row } from '@/components/container';
+import useColorTheme from "@/hooks/useColorTheme";
+
 
 export default function Home() {
-  const { changeColorTheme } = useColorTheme();
+  const colors = useColorTheme();
   return (
     <>
       <Head>
@@ -12,10 +15,30 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Main>테스트</Main>
-      <button onClick={changeColorTheme}>test</button>
+      <Layout>
+        <Section id="background">
+          <Container>
+            <Row>
+
+            </Row>
+          </Container>
+        </Section>
+        <Section id="skills">
+          <Container>
+
+          </Container>
+        </Section>
+        <Section id="background">
+          <Container>
+
+          </Container>
+        </Section>
+      </Layout>
     </>
   );
 }
 
-const Main = styled.main``;
+const Layout = styled.div`
+  display: flex: ;
+  flex-direction: column;
+`;
