@@ -6,8 +6,9 @@ import {
   rootFontSize,
 } from "@/styles/theme";
 import { ThemeProvider } from "styled-components";
+import { StyledEngineProvider } from '@mui/material/styles';
 
-import { useColorTheme } from "store/useColorTheme";
+import { useColorTheme } from "store/useColorThemeStore";
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -38,7 +39,12 @@ const Providers = ({ children }: ProvidersProps) => {
     deviceSize,
     rootFontSize,
   };
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+  return (
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    </StyledEngineProvider>
+  );
+
 };
 
 export default Providers;
