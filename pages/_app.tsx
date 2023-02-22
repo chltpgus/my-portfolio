@@ -10,14 +10,14 @@ const Providers = dynamic(() => import("@/components/Providers"), {
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
-    <Providers>
-      <GlobalStyle />
+    <>
       <ChannelTalk />
-      <>
+      <Providers>
         <Nav />
+        <GlobalStyle />
         <Component {...pageProps} />
-      </>
-    </Providers>
+      </Providers>
+    </>
   );
 };
 
