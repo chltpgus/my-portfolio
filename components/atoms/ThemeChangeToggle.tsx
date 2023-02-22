@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { motion } from "framer-motion";
 
-import { useColorTheme } from '@/store/useColorTheme';
+import { useColorTheme } from '@/store/useColorThemeStore';
 
 interface ThemeChangeToggleProps {
 
@@ -9,23 +9,39 @@ interface ThemeChangeToggleProps {
 
 const ThemeChangeToggle = (props: ThemeChangeToggleProps) => {
   const { colorTheme, changeColorTheme } = useColorTheme();
-  return <Switch onClick={changeColorTheme} isToggle={colorTheme === 'light'}>
-    <Circle layout />
-  </Switch>
+  const animation = {
+    initial: {
+      left: "6px",
+      right: ""
+    },
+    animate: {
+      left: colorTheme === 'light' ? "6px" : "",
+      right: colorTheme === 'light' ? "" : "6px"
+    },
+    transition: { duration: 0.2, delay: 1 * 0.2 }
+  }
+  return (
+    <Switch onClick={changeColorTheme} >
+      <Circle {...animation} />
+    </Switch>
+  );
 };
 
 export default ThemeChangeToggle;
 
-const Switch = styled.button<{ isToggle: boolean }>`
+const Switch = styled.button`
+  position: relative;
   display:flex;
   padding: 6px;
   width: 64px;
+  min-height: 36px;
   background-color: ${props => props.theme.colors.primary};
   border-radius: 100px;
-  justify-content: ${props => props.isToggle ? 'flex-start' : 'flex-end'}
 `;
 
 const Circle = styled(motion.div)`
+  position: absolute;
+  top: 6px;
   width: 24px;
   height: 24px;
   background-color: ${props => props.theme.colors.textColor};
