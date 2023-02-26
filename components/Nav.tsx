@@ -8,12 +8,13 @@ import { notoSansKrBold } from '@/styles/fonts/notoSans';
 import { Link } from 'react-scroll';
 import useMaxSize from '@/hooks/useMaxSize';
 import useColorTheme from '@/hooks/useColorTheme';
+import { useNavMenu } from '@/store/useNavMenuStore';
 
 import ThemeChangeToggle from '@/components/atoms/ThemeChangeToggle';
 import MenuIcon from '@mui/icons-material/Menu';
 
 const Nav = () => {
-    const [isMenu, setIsMenu] = useState<boolean>(false);
+    const { isMenu, setIsMenu } = useNavMenu();
     const isTablet = useMaxSize(deviceSize.tablet);
     const colors = useColorTheme();
 
@@ -31,14 +32,16 @@ const Nav = () => {
 
     return <NavStyle.NavContainer>
         <NavStyle.Nav>
-            <NavStyle.LogoWrapper>
-                Hyeon
-            </NavStyle.LogoWrapper>
+            <Link to="information" spy={true} smooth={true}>
+                <NavStyle.LogoWrapper>
+                    Hyeon
+                </NavStyle.LogoWrapper>
+            </Link>
             <NavStyle.LinkContainer>
                 {(isMenu || !isTablet) && (<>
                     <NavStyle.LinkWrapper {...animation}>
-                        <NavStyle.Link to="background" spy={true} smooth={true}>
-                            Background
+                        <NavStyle.Link to="aboutMe" spy={true} smooth={true}>
+                            About Me
                         </NavStyle.Link>
                     </NavStyle.LinkWrapper>
                     <NavStyle.LinkWrapper {...animation}>
@@ -62,7 +65,7 @@ const Nav = () => {
                 </>)}
                 {
                     isTablet &&
-                    (<NavStyle.MenuWrapper onClick={() => setIsMenu((isMenu) => !isMenu)}>
+                    (<NavStyle.MenuWrapper onClick={() => setIsMenu(!isMenu)}>
                         <MenuIcon sx={{ color: colors.textColor }} fontSize="large" />
                     </NavStyle.MenuWrapper>)
                 }
@@ -76,12 +79,13 @@ export default Nav;
 const NavStyle = {
     NavContainer: styled.div`
         display: flex;
-        position: sticky;
+        position: fixed;
         top:0;
         width: 100%;
         justify-content: center;
         background-color: ${props => props.theme.colors.backgroundColor};
         box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.12);
+        z-index: 2;
         ${notoSansKrBold.style};
     `,
     Nav: styled.nav`
@@ -99,6 +103,7 @@ const NavStyle = {
         display: flex;
         font-size: 1.5rem;
         align-items: center;
+        cursor: pointer;
     `,
     LinkContainer: styled.ul`
         display: flex;
