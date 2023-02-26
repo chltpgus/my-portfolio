@@ -6,6 +6,7 @@ const darkColors = {
     black: '#434343',
     primaryLight: '#FAEBCD',
     primary: '#F7C873',
+    complementary: '#4289E3',
 };
 
 const lightColors = {
@@ -16,6 +17,7 @@ const lightColors = {
     black: '#434343',
     primaryLight: '#FAEBCD',
     primary: '#F7C873',
+    complementary: '#4289E3',
 };
 
 const rootFontSize = 16;
