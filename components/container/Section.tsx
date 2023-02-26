@@ -6,6 +6,7 @@ interface SectionProps {
 }
 
 const Section = styled.section<SectionProps>`
+  position: relative;
   display: flex;
   width: 100%;
   background-color: ${props => props?.backgroundColor ? props?.backgroundColor : ''};
