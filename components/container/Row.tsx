@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 
 import media from '@/styles/mediaQuery';
+import fonts from '@/styles/fonts/notoSans';
 
 interface RowProps {
   maxWidth?: number;
   color?: string;
-  fontFamily?: string;
+  fontFamily?: "notoSansKrBold" | "notoSansKrRegular" | "notoSansKrMedium";
   justifyContent?: string;
   alignItems?: string;
   gap?: number;
@@ -65,10 +66,9 @@ const getRem = (value?: number) =>
   value ? `${value}rem` : value === 0 ? "0rem" : "";
 
 const Row = styled.div<RowProps>`
-display: flex;
+  display: flex;
   width: 100%;
   color: ${(props) => props.color};
-  font-family: ${(props) => props?.fontFamily};
   justify-content: ${(props) => props?.justifyContent};
   align-items: ${(props) => props?.alignItems};
   max-width: ${(props) => getPixel(props.maxWidth)};
@@ -83,7 +83,8 @@ display: flex;
   margin-right: ${(props) => getPixel(props.marginRight)};
   margin-bottom: ${(props) => getPixel(props.marginBottom)};
   margin-top: ${(props) => getPixel(props.marginTop)};
-  font-size: ${(props) => getPixel(props.fontSize)};
+  font-size: ${(props) => getRem(props.fontSize)};
+  font-family: ${(props) => props?.fontFamily ? fonts[props?.fontFamily].style.fontFamily : fonts['notoSansKrRegular'].style.fontFamily};
   ${media.laptop} {
     padding: ${(props) => getPixel(props.laptopPadding)};
     padding-left: ${(props) => getPixel(props.laptopPaddingLeft)};
@@ -95,7 +96,7 @@ display: flex;
     margin-right: ${(props) => getPixel(props.laptopMarginRight)};
     margin-bottom: ${(props) => getPixel(props.laptopMarginBottom)};
     margin-top: ${(props) => getPixel(props.laptopMarginTop)};
-    font-size: ${(props) => getPixel(props.laptopFontSize)};
+    font-size: ${(props) => getRem(props.laptopFontSize)};
   }
   ${media.tablet} {
     padding: ${(props) => getPixel(props.tabletPadding)};
@@ -108,7 +109,7 @@ display: flex;
     margin-right: ${(props) => getPixel(props.tabletMarginRight)};
     margin-bottom: ${(props) => getPixel(props.tabletMarginBottom)};
     margin-top: ${(props) => getPixel(props.tabletMarginTop)};
-    font-size: ${(props) => getPixel(props.tabletFontSize)};
+    font-size: ${(props) => getRem(props.tabletFontSize)};
   }
   ${media.mobile} {
     padding: ${(props) => getPixel(props.mobilePadding)};
@@ -121,7 +122,7 @@ display: flex;
     margin-right: ${(props) => getPixel(props.mobileMarginRight)};
     margin-bottom: ${(props) => getPixel(props.mobileMarginBottom)};
     margin-top: ${(props) => getPixel(props.mobileMarginTop)};
-    font-size: ${(props) => getPixel(props.mobileFontSize)};
+    font-size: ${(props) => getRem(props.mobileFontSize)};
   }
 `;
 
