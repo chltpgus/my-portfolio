@@ -3,10 +3,19 @@ import styled from "styled-components";
 
 import { Section, Container, Row } from '@/components/container';
 import useColorTheme from "@/hooks/useColorTheme";
+import { useNavMenu } from "@/store/useNavMenuStore";
+import { notoSansKrBold } from '@/styles/fonts/notoSans'
+
+import Geometry from "@/components/canvas/Geometry";
+import Title from "@/components/Title";
+import { Information, AboutMe, Skills } from "@/components/content";
 
 
 export default function Home() {
   const colors = useColorTheme();
+  const { isMenu } = useNavMenu();
+
+
   return (
     <>
       <Head>
@@ -16,24 +25,38 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Section id="background">
+        <Section id="information">
+          <AbsoluteBackground>
+            <Geometry />
+          </AbsoluteBackground>
           <Container>
-            <Row>
-
-            </Row>
+            <Information />
+          </Container>
+        </Section>
+        <Section id="aboutMe">
+          <Container>
+            <AboutMe />
           </Container>
         </Section>
         <Section id="skills">
+          <AbsoluteBackground>
+            <ColorBackground backgroundColor={colors.complementary} />
+          </AbsoluteBackground>
+          <Container>
+            <Skills />
+          </Container>
+        </Section>
+        <Section id="project">
           <Container>
 
           </Container>
         </Section>
-        <Section id="background">
+        <Section id="career">
           <Container>
 
           </Container>
         </Section>
-      </Layout>
+      </Layout >
     </>
   );
 }
@@ -41,4 +64,22 @@ export default function Home() {
 const Layout = styled.div`
   display: flex: ;
   flex-direction: column;
+  min-height: 3000px;
+`;
+
+const AbsoluteBackground = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+`;
+
+const CenterRow = styled(Row)`
+  justify-content: center;
+  align-items: center;
+`;
+
+const ColorBackground = styled.div<{ backgroundColor: string }>`
+  background-color: ${props => props.backgroundColor};
+  height:100%;
+  width: 100%;
 `;
