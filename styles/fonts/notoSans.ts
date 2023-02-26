@@ -1,6 +1,6 @@
 import { Noto_Sans_KR } from '@next/font/google';
 
-const bold = Noto_Sans_KR({
+const notoSansKrBold = Noto_Sans_KR({
     weight: '700',
     variable: '--noto-sans_KR-bold',
     display: 'fallback',
@@ -9,7 +9,7 @@ const bold = Noto_Sans_KR({
     fallback: ['system-ui'],
 });
 
-const regular = Noto_Sans_KR({
+const notoSansKrRegular = Noto_Sans_KR({
     weight: '400',
     display: 'fallback',
     subsets: ['latin'],
@@ -18,7 +18,7 @@ const regular = Noto_Sans_KR({
     fallback: ['system-ui'],
 });
 
-const medium = Noto_Sans_KR({
+const notoSansKrMedium = Noto_Sans_KR({
     weight: '500',
     display: 'fallback',
     subsets: ['latin'],
@@ -27,4 +27,12 @@ const medium = Noto_Sans_KR({
     fallback: ['system-ui'],
 });
 
-export { bold as notoSansKrBold, regular as notoSansKrRegular, medium as notoSansKrMedium };
+export { notoSansKrBold, notoSansKrRegular, notoSansKrMedium };
+
+const fonts = {
+    notoSansKrBold: notoSansKrBold,
+    notoSansKrRegular: notoSansKrRegular,
+    notoSansKrMedium: notoSansKrMedium,
+};
+
+export default fonts;
